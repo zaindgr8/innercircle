@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Inner Circle DXB — Private Founders Event & Cruise</title>
+  <meta name="description" content="Register for The Inner Circle DXB exclusive 2-Hour Cruise for founders and entrepreneurs. 24 July, 7-9 PM at Al Jaddaf next to Versace Hotel.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="logo.JPG" type="image/jpeg">
+</head>
+<body>
+
+  <!-- Brand Header -->
+  <header class="brand-header">
+    <img src="logo.JPG" alt="The Inner Circle DXB Logo" class="brand-logo-img">
+    <div class="gold-divider">
+      <div class="gold-divider-diamond"></div>
+    </div>
+    <div class="brand-subtitle">Private Founders & Entrepreneurs Community</div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="main-container">
+
+    <!-- Left Column: Event Overview -->
+    <section class="glass-card">
+      <div class="event-badge">Upcoming Founder Gathering</div>
+      <h1 class="section-title">2 Hour Cruise & Networking</h1>
+
+      <!-- Countdown Timer -->
+      <div class="countdown-box">
+        <div class="countdown-label">Event Starts In</div>
+        <div class="timer-grid">
+          <div class="timer-item">
+            <span class="timer-val" id="days">00</span>
+            <span class="timer-unit">Days</span>
+          </div>
+          <div class="timer-item">
+            <span class="timer-val" id="hours">00</span>
+            <span class="timer-unit">Hours</span>
+          </div>
+          <div class="timer-item">
+            <span class="timer-val" id="mins">00</span>
+            <span class="timer-unit">Mins</span>
+          </div>
+          <div class="timer-item">
+            <span class="timer-val" id="secs">00</span>
+            <span class="timer-unit">Secs</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Event Details List -->
+      <div class="details-list">
+        <div class="detail-item">
+          <div class="detail-icon">📍</div>
+          <div class="detail-content">
+            <div class="detail-title">Location</div>
+            <div class="detail-text">Al Jaddaf next to Versace Hotel, Dubai</div>
+            <a href="https://maps.app.goo.gl/aFkohoFcf376TbJH6?g_st=ic" target="_blank" rel="noopener" class="map-btn">
+              🗺️ Open in Google Maps &rarr;
+            </a>
+          </div>
+        </div>
+
+        <div class="detail-item">
+          <div class="detail-icon">📅</div>
+          <div class="detail-content">
+            <div class="detail-title">Date</div>
+            <div class="detail-text">Thursday, 24 July</div>
+          </div>
+        </div>
+
+        <div class="detail-item">
+          <div class="detail-icon">⏰</div>
+          <div class="detail-content">
+            <div class="detail-title">Time</div>
+            <div class="detail-text">7:00 PM – 9:00 PM GST</div>
+          </div>
+        </div>
+
+        <div class="detail-item">
+          <div class="detail-icon">🚤</div>
+          <div class="detail-content">
+            <div class="detail-title">Experience</div>
+            <div class="detail-text">2 Hour Sunset & Night Cruise</div>
+          </div>
+        </div>
+
+        <div class="detail-item">
+          <div class="detail-icon">🎟️</div>
+          <div class="detail-content">
+            <div class="detail-title">Investment</div>
+            <div class="detail-text" style="color: var(--gold-light);">65 AED per head</div>
+          </div>
+        </div>
+
+        <div class="detail-item">
+          <div class="detail-icon">🍢</div>
+          <div class="detail-content">
+            <div class="detail-title">Inclusions</div>
+            <div class="detail-text">Gourmet Snacks & Premium Beverages 🥤</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Right Column: Registration Form -->
+    <section class="glass-card">
+      <h2 class="section-title">Reserve Your Seat</h2>
+
+      <form id="registrationForm" onsubmit="handleRegistrationSubmit(event)">
+        <!-- Name -->
+        <div class="form-group">
+          <label class="form-label" for="fullName">Full Name <span class="req">*</span></label>
+          <input type="text" id="fullName" class="form-input" placeholder="e.g. Alexander Wright" required>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+          <label class="form-label" for="email">Email Address <span class="req">*</span></label>
+          <input type="email" id="email" class="form-input" placeholder="alexander@company.com" required>
+        </div>
+
+        <!-- Contact Number -->
+        <div class="form-group">
+          <label class="form-label" for="phone">Contact Number <span class="req">*</span></label>
+          <div class="phone-input-group">
+            <select id="countryCode" class="country-select">
+              <option value="+971">🇦🇪 +971</option>
+              <option value="+966">🇸🇦 +966</option>
+              <option value="+974">🇶🇦 +974</option>
+              <option value="+965">🇰🇼 +965</option>
+              <option value="+968">🇴🇲 +968</option>
+              <option value="+973">🇧🇭 +973</option>
+              <option value="+44">🇬🇧 +44</option>
+              <option value="+1">🇺🇸 +1</option>
+            </select>
+            <input type="tel" id="phone" class="form-input" placeholder="50 123 4567" required>
+          </div>
+        </div>
+
+        <!-- Company / Founder Designation (Optional) -->
+        <div class="form-group">
+          <label class="form-label" for="company">Company / Startup Name</label>
+          <input type="text" id="company" class="form-input" placeholder="e.g. Apex Innovations (Optional)">
+        </div>
+
+        <!-- Ticket Counter -->
+        <div class="form-group">
+          <label class="form-label">Number of Tickets</label>
+          <div class="ticket-counter-box">
+            <div class="counter-controls">
+              <button type="button" class="counter-btn" onclick="updateTickets(-1)">-</button>
+              <span class="counter-val" id="ticketCount">1</span>
+              <button type="button" class="counter-btn" onclick="updateTickets(1)">+</button>
+            </div>
+            <div class="price-summary">
+              <div class="price-total" id="totalDisplay">65 AED</div>
+              <div class="price-sub" id="priceBreakdown">1 x 65 AED</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ziina Payment Gateway Branded Notice -->
+        <div class="ziina-brand-badge">
+          <span>🔒 Secured by</span>
+          <span class="ziina-logo-text">Ziina Payment Gateway</span>
+          <span>(Inner Circle Theme)</span>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn-gold-submit" id="submitBtn">
+          <span id="btnText">PROCEED TO PAYMENT (65 AED)</span>
+          <span id="btnSpinner" class="spinner" style="display: none;"></span>
+        </button>
+
+        <div id="errorMessage" style="color: #F87171; font-size: 0.85rem; margin-top: 0.8rem; text-align: center; display: none;"></div>
+      </form>
+    </section>
+
+  </main>
+
+  <!-- Ziina Payment Modal Overlay -->
+  <div class="modal-backdrop" id="ziinaModal">
+    <div class="modal-card">
+      <button class="modal-close-btn" onclick="closeZiinaModal()">✕</button>
+
+      <div class="modal-header">
+        <div class="brand-subtitle" style="font-size: 1rem; color: var(--gold-light);">THE INNER CIRCLE DXB</div>
+        <h3 class="modal-title">Complete Payment</h3>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem;">
+          Total: <strong id="modalAmount" style="color: var(--gold-light);">65 AED</strong> for <span id="modalTickets">1</span> Ticket(s)
+        </p>
+      </div>
+
+      <!-- Iframe or Fallback container -->
+      <div id="paymentContent">
+        <div class="iframe-container" id="iframeWrapper">
+          <iframe id="ziinaIframe" src="about:blank" title="Ziina Payment"></iframe>
+        </div>
+
+        <div style="margin-top: 1.25rem; text-align: center;">
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.75rem;">
+            If the payment window does not load above, click below to open Ziina secure checkout directly:
+          </p>
+          <a id="directZiinaBtn" href="#" target="_blank" class="btn-secondary-gold" style="width: 100%; justify-content: center;">
+            💳 Pay via Ziina Checkout &rarr;
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2026 The Inner Circle DXB. All rights reserved. Exclusively for Founders & Entrepreneurs.
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

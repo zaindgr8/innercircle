@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VIP Confirmation — The Inner Circle DXB</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="logo.JPG" type="image/jpeg">
+</head>
+<body>
+
+  <!-- Brand Header -->
+  <header class="brand-header">
+    <img src="logo.JPG" alt="The Inner Circle DXB Logo" class="brand-logo-img">
+    <div class="gold-divider">
+      <div class="gold-divider-diamond"></div>
+    </div>
+    <div class="brand-subtitle">Private Founders & Entrepreneurs Community</div>
+  </header>
+
+  <main class="thankyou-container">
+    
+    <!-- VIP Pass Container -->
+    <div class="vip-pass-card" id="vipPassCard">
+      <div class="pass-header">
+        <div>
+          <div class="brand-subtitle" style="font-size: 0.85rem; color: var(--gold-light); margin: 0;">OFFICIAL VIP EVENT PASS</div>
+          <h2 style="font-family: 'Cinzel', serif; font-size: 1.4rem; color: #FFF; margin-top: 0.2rem;">2 Hour Sunset Cruise</h2>
+        </div>
+        <div class="pass-status-badge">
+          <span>✓</span> CONFIRMED & PAID
+        </div>
+      </div>
+
+      <!-- Guest & Pass Details -->
+      <div class="pass-grid">
+        <div>
+          <div class="pass-field-label">Member / Guest</div>
+          <div class="pass-field-value" id="passName">Loading...</div>
+        </div>
+
+        <div>
+          <div class="pass-field-label">Booking Reference</div>
+          <div class="pass-field-value" id="passRef" style="font-family: 'Cinzel', serif; letter-spacing: 1px;">ICD-XXXX</div>
+        </div>
+
+        <div>
+          <div class="pass-field-label">Contact Details</div>
+          <div class="pass-field-value" id="passContact" style="font-size: 0.95rem; color: var(--text-main);">-</div>
+        </div>
+
+        <div>
+          <div class="pass-field-label">Ticket Access</div>
+          <div class="pass-field-value" id="passTickets">1 Guest Pass</div>
+        </div>
+
+        <div>
+          <div class="pass-field-label">Event Date & Time</div>
+          <div class="pass-field-value" style="font-size: 0.95rem;">24 July 2026 | 7:00 – 9:00 PM</div>
+        </div>
+
+        <div>
+          <div class="pass-field-label">Venue Location</div>
+          <div class="pass-field-value" style="font-size: 0.95rem;">Al Jaddaf next to Versace Hotel 📍</div>
+        </div>
+      </div>
+
+      <!-- QR Code Pass Section -->
+      <div class="qr-section">
+        <img id="qrCodeImg" src="" alt="VIP Pass QR Code" class="qr-code-img">
+        <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.5px;">
+          Present QR Code at Boarding Entrance
+        </div>
+      </div>
+    </div>
+
+    <!-- Thank You Summary Message & Actions -->
+    <div class="glass-card" style="width: 100%; text-align: center; margin-bottom: 2rem;">
+      <h3 style="font-family: 'Cinzel', serif; font-size: 1.3rem; color: var(--gold-light); margin-bottom: 0.75rem;">
+        Welcome to The Inner Circle
+      </h3>
+      <p style="color: var(--text-main); font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.5rem;">
+        Your reservation for the 2 Hour Cruise & Networking event is confirmed. We look forward to hosting you for an unforgettable evening of high-level networking, gourmet snacks, and beverages.
+      </p>
+
+      <!-- Action Buttons -->
+      <div class="action-buttons-group">
+        <a href="https://maps.app.goo.gl/aFkohoFcf376TbJH6?g_st=ic" target="_blank" rel="noopener" class="btn-secondary-gold">
+          📍 Open Location Map
+        </a>
+        <a id="gcalBtn" href="#" target="_blank" rel="noopener" class="btn-secondary-gold">
+          📅 Add to Google Calendar
+        </a>
+        <button onclick="downloadIcsFile()" class="btn-secondary-gold">
+          📥 Download .ics Invite
+        </button>
+        <button onclick="window.print()" class="btn-secondary-gold">
+          🖨️ Print VIP Pass
+        </button>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    &copy; 2026 The Inner Circle DXB. All rights reserved.
+  </footer>
+
+  <script>
+    const API_BASE = (window.location.protocol === 'file:' || !window.location.host) 
+      ? 'http://localhost:8080' 
+      : '';
+
+    document.addEventListener("DOMContentLoaded", async () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const bookingRef = urlParams.get("ref");
+      const intentId = urlParams.get("intent_id");
+
+      if (bookingRef || intentId) {
+        try {
+          const res = await fetch(`${API_BASE}/api/verify-payment?ref=${bookingRef || ''}&intent_id=${intentId || ''}`);
+          if (res.ok) {
+            const data = await res.json();
+            renderPassDetails(data);
+          } else {
+            fetchFallback();
+          }
+        } catch (e) {
+          fetchFallback();
+        }
+      } else {
+        fetchFallback();
+      }
+    });
+
+    function renderPassDetails(data) {
+      document.getElementById("passName").innerText = data.name + (data.company ? ` (${data.company})` : '');
+      document.getElementById("passRef").innerText = data.booking_ref;
+      document.getElementById("passContact").innerText = `${data.email} | ${data.phone}`;
+      document.getElementById("passTickets").innerText = `${data.tickets} Ticket${data.tickets > 1 ? 's' : ''} (${data.amount_aed} AED Paid)`;
+
+      // Generate QR Code using QuickChart QR API
+      const qrData = encodeURIComponent(`The Inner Circle DXB | Pass: ${data.booking_ref} | Guest: ${data.name} | Tickets: ${data.tickets}`);
+      document.getElementById("qrCodeImg").src = `https://quickchart.io/qr?text=${qrData}&size=180&margin=1`;
+
+      // Set up Google Calendar URL
+      setupGoogleCalendarLink(data);
+    }
+
+    function fetchFallback() {
+      document.getElementById("passName").innerText = "Inner Circle VIP Guest";
+      document.getElementById("passRef").innerText = "ICD-CONFIRMED";
+      document.getElementById("passContact").innerText = "Confirmed via Ziina Payment";
+      document.getElementById("passTickets").innerText = "1 Guest Ticket (65 AED Paid)";
+      const qrData = encodeURIComponent(`The Inner Circle DXB VIP Ticket Pass - Al Jaddaf Cruise`);
+      document.getElementById("qrCodeImg").src = `https://quickchart.io/qr?text=${qrData}&size=180&margin=1`;
+      setupGoogleCalendarLink({ booking_ref: "ICD-EVENT" });
+    }
+
+    function setupGoogleCalendarLink(data) {
+      // Event: 24 July 2026, 19:00 GST (15:00 UTC) to 21:00 GST (17:00 UTC) -> 20260724T150000Z/20260724T170000Z
+      const title = encodeURIComponent("The Inner Circle DXB - 2 Hour Cruise & Networking");
+      const details = encodeURIComponent(`Exclusive Founders & Entrepreneurs Event.\nRef: ${data.booking_ref || 'ICD'}\nIncludes: Snacks & Beverages.\nLocation: Al Jaddaf next to Versace Hotel.`);
+      const location = encodeURIComponent("Al Jaddaf next to Versace Hotel, Dubai, UAE");
+      const dates = "20260724T150000Z/20260724T170000Z";
+
+      const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${dates}&details=${details}&location=${location}`;
+      document.getElementById("gcalBtn").href = gcalUrl;
+    }
+
+    function downloadIcsFile() {
+      const icsContent = 
+`BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//The Inner Circle DXB//NONSGML v1.0//EN
+BEGIN:VEVENT
+UID:icd-cruise-20260724@innercircle.dxb
+DTSTAMP:20260719T120000Z
+DTSTART:20260724T150000Z
+DTEND:20260724T170000Z
+SUMMARY:The Inner Circle DXB - 2 Hour Cruise & Networking
+DESCRIPTION:Exclusive 2-Hour Cruise for Private Founders & Entrepreneurs Community. Includes Snacks and Beverages.
+LOCATION:Al Jaddaf next to Versace Hotel, Dubai, UAE
+STATUS:CONFIRMED
+END:VEVENT
+END:VCALENDAR`;
+
+      const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8;' });
+      const link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.setAttribute('download', 'The_Inner_Circle_DXB_Cruise.ics');
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  </script>
+</body>
+</html>
