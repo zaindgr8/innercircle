@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getRegistrationByIntentId, getRegistrationByRef, updateRegistrationStatus } from '@/lib/storage';
 
-const ZIINA_API_KEY = "WQq2Jrqt1L/dKZPsGKHpGnHY4541IPkRSdKMGUh9OLk57UWHidf1FF4/LMiSPlJL";
+const ZIINA_API_KEY = process.env.ZIINA_API_KEY || "WQq2Jrqt1L/dKZPsGKHpGnHY4541IPkRSdKMGUh9OLk57UWHidf1FF4/LMiSPlJL";
 const ZIINA_URL = "https://api-v2.ziina.com/api/payment_intent";
 
 export async function GET(request: Request) {
